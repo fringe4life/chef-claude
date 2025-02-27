@@ -17,7 +17,7 @@ export default function Home() {
   const formRef = useRef<HTMLFormElement | null>(null);
   // ref to manage dialog
   // const toastRef = useRef<HTMLDialogElement | null>(null);
-  const [message, setMessage] = useState<React.ReactNode | null>(null)
+  const [message, setMessage] = useState<string | TrustedHTML | null>(null)
 
   
 
@@ -89,7 +89,7 @@ export default function Home() {
 					</IngredientsList> : null
 				}
       {ingredients.length >= 4 ? <IngredientsButton callback={fetchAIRecipe} /> : null}
-      { message? <Recipe>{message}</Recipe> : null }
+      { message? <Recipe html={message} /> : null }
     </>
   );
 }
