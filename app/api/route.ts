@@ -9,7 +9,6 @@ const anthropic = new Anthropic({
 });
 
 export async function POST(request: NextRequest){
-    console.log(process.env.ANTHROPIC_API_KEY)
     const {ingredients} = await request.json();
 
     console.log(ingredients)
@@ -38,11 +37,9 @@ export async function POST(request: NextRequest){
             }
         ],
     });
-    console.log(msg.content[0])
-    // @ts-ignore
+    // @ts-expect-error
     const markdown = await remark().use(remarkHtml).process(msg.content[0].text)
     
-    // @ts-ignore
     return NextResponse.json(markdown.value, { status: 200 })
 
 }

@@ -8,10 +8,6 @@ import IngredientsButton from "./components/Ingredients/IngredientsButton";
 import Recipe from "./components/Recipe";
 
 
-type PostResponse = {
-  value: React.ReactNode
-}
-
 export default function Home() {
   // state for ingredients
   const [ingredients, setIngredients] = useState<string[]>([]);
@@ -73,7 +69,6 @@ export default function Home() {
 					console.log(data);
           setMessage(data)
 				} catch (error) {
-					console.error("Error:", error);
 					setError("Failed to fetch AI recipe");
           setMessage(null)
 				}
