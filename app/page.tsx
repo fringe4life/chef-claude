@@ -14,7 +14,7 @@ type PostResponse = {
 
 export default function Home() {
   // state for ingredients
-  const [ingredients, setIngredients] = useState<string[]>(["oregano", "chicken breast", "bread crumbs", "blue cheese"]);
+  const [ingredients, setIngredients] = useState<string[]>([]);
   // state for error management
   const [error, setError] = useState("")
   // ref to refocus input element
