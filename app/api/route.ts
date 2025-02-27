@@ -37,7 +37,7 @@ export async function POST(request: NextRequest){
             }
         ],
     });
-    // @ts-expect-error
+    // @ts-expect-error: current provided type definition is incorrect
     const markdown = await remark().use(remarkHtml).process(msg.content[0].text)
     
     return NextResponse.json(markdown.value, { status: 200 })

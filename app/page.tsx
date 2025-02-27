@@ -68,9 +68,11 @@ export default function Home() {
 					const data = await response.json();
 					console.log(data);
           setMessage(data)
-				} catch (error) {
-					setError("Failed to fetch AI recipe");
-          setMessage(null)
+				} catch (err) {
+          if(err instanceof Error){
+            setError("Failed to fetch AI recipe");
+            setMessage(null)
+          } 
 				}
 			}
 		}
@@ -81,7 +83,7 @@ export default function Home() {
       { error ? <p className="mt-2 max-w-3/4 m-auto text-sm text-red-600">{error}</p> : null }
       { ingredients.length > 0 ?
 					<IngredientsList>
-						{ingredients.map((ingredient, _) => (
+						{ingredients.map((ingredient) => (
 							<IngredientItem key={ingredient}>{ingredient}</IngredientItem>
 						))}
 					</IngredientsList> : null
