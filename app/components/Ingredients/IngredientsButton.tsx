@@ -11,7 +11,7 @@ export default function IngredientsButton({callback}: IngredientsButtonProps){
                 <h3 className="text-lg/6 font-medium text-neutral-900">Ready for a recipe?</h3>
                 <p className="text-gray-500 text-sm mt-2">Generate a recipe from your list of ingredients.</p>
             </hgroup>
-            <Button type="button" onClick={callback} className="bg-orange-600 py-2 px-4 xs:justify-self-end flex-1 xs:width-[16ch] xs:self-center">Get a recipe</Button>
+            <Button type="button" onClick={callback} className="bg-orange-600 py-2 px-2 xs:justify-self-end flex-1 xs:basis-[14ch] xs:self-center">Get a recipe</Button>
         </section>
     )
 }
