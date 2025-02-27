@@ -1,16 +1,15 @@
 "server only"
 import Anthropic from '@anthropic-ai/sdk';
 import { type NextRequest, NextResponse } from "next/server"
-// import remarkHtml from 'remark-html';
-// import { remark } from 'remark';
+import remarkHtml from 'remark-html';
+import { remark } from 'remark';
 
 const anthropic = new Anthropic({
-        apiKey: process.env.ANTHROPIC_API_KEY,
+    apiKey: process.env.ANTHROPIC_API_KEY,
 });
-console.log(process.env.ANTHROPIC_API_KEY)
 
 export async function POST(request: NextRequest){
-    
+    console.log(process.env.ANTHROPIC_API_KEY)
     const {ingredients} = await request.json();
 
     console.log(ingredients)
@@ -25,12 +24,11 @@ export async function POST(request: NextRequest){
         _request_id?: string | null
     } = await anthropic.messages.create({
         model: 'claude-3-5-sonnet-latest',
-        max_tokens: 256,
-        
-        system: 'You are a chef who will be supplied at least 4 ingredients and should provide a potential recipe that should use most but do not need to use all ingredients. You can also include ingredients not listed but should try to minimise the amount of unlisted ingredients. The recipe you come up with should be returned in markdown',
-
+        max_tokens: 1024,
+        system: 'You are a chef who will be supplied at least 4 ingredients and should provide a potential recipe that should use most but do not need to use all ingredients. You can also include ingredients not listed but should try to minimise the amount of unlisted ingredients. The recipe you come up with should be returned in markdown to make it easier to render in a webpage',
         messages: [
-            { role: "user", 
+            { 
+                role: "user", 
                 content: [
                     {
                         type: "text",
@@ -42,6 +40,9 @@ export async function POST(request: NextRequest){
     });
     console.log(msg.content[0])
     // @ts-ignore
-    return NextResponse.json(msg.content[0].text, { status: 200 })
+    const markdown = await remark().use(remarkHtml).process(msg.content[0].text)
+    
+    // @ts-ignore
+    return NextResponse.json(markdown.value, { status: 200 })
 
 }

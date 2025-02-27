@@ -5,6 +5,13 @@ import {useState, useRef, type FormEventHandler} from 'react'
 import IngredientsList from "./components/Ingredients/IngredientsList";
 import IngredientItem from "./components/Ingredients/IngredientItem";
 import IngredientsButton from "./components/Ingredients/IngredientsButton";
+import Recipe from "./components/Recipe";
+
+
+type PostResponse = {
+  value: React.ReactNode
+}
+
 export default function Home() {
   // state for ingredients
   const [ingredients, setIngredients] = useState<string[]>(["oregano", "chicken breast", "bread crumbs", "blue cheese"]);
@@ -85,6 +92,7 @@ export default function Home() {
 					</IngredientsList> : null
 				}
       {ingredients.length >= 4 ? <IngredientsButton callback={fetchAIRecipe} /> : null}
+      { message? <Recipe>{message}</Recipe> : null }
     </>
   );
 }
