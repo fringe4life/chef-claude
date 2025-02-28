@@ -11,6 +11,7 @@ import Recipe from "./components/Recipe";
 export default function Home() {
   // state for ingredients["blue cheese", "oregano", "bread crumbs", "chicken breast"]
   const [ingredients, setIngredients] = useState<string[]>([]);
+  // state for ingredients
   // state for error management
   const [error, setError] = useState("")
   // ref to refocus input element
