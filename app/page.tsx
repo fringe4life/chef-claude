@@ -1,7 +1,7 @@
 "use client"
 import Header from "./components/Header";
 import IngredientsForm from "./components/Ingredients/IngredientsForm";
-import {useState, useRef, type FormEventHandler} from 'react'
+import {useState, useRef, type FormEventHandler, useEffect} from 'react'
 import IngredientsList from "./components/Ingredients/IngredientsList";
 import IngredientItem from "./components/Ingredients/IngredientItem";
 import IngredientsButton from "./components/Ingredients/IngredientsButton";
@@ -10,7 +10,7 @@ import Recipe from "./components/Recipe";
 
 export default function Home() {
   // state for ingredients
-  const [ingredients, setIngredients] = useState<string[]>([]);
+  const [ingredients, setIngredients] = useState<string[]>(["blue cheese", "oregano", "bread crumbs", "chicken breast"]);
   // state for error management
   const [error, setError] = useState("")
   // ref to refocus input element
@@ -18,13 +18,27 @@ export default function Home() {
   // ref to manage dialog
   // const toastRef = useRef<HTMLDialogElement | null>(null);
   const [message, setMessage] = useState<string | TrustedHTML | null>(null)
+  // state for loading
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+  // ref to manage message scrolling
+  const messageScrollRef = useRef<HTMLDivElement | null>(null);
 
+  useEffect(() => {
+    if (message && messageScrollRef.current) {
+      messageScrollRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [message]);
+
+  const handleIngredientDelete = (index: number) => {
+    setError("")
+    setIngredients(ingredients.filter((_, i) => i!== index));
+  }
   
 
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
     console.log("hello from submit")
-    const input = formRef.current?.ingredients.value;
+    const input = formRef.current?.ingredients.value.toLowerCase().trim();
     console.log(input)
     if (!input || input.trim().length === 0) {
       setError("Please enter an ingredient");
@@ -57,6 +71,7 @@ export default function Home() {
 			else {
 				setError("");
 				try {
+          setIsLoading(true)
 					const response = await fetch("/api", {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
@@ -73,9 +88,13 @@ export default function Home() {
             setError("Failed to fetch AI recipe");
             setMessage(null)
           } 
-				}
+				} finally {
+          setIsLoading(false)
+        }
 			}
 		}
+
+    
   return (
     <>
       <Header />
@@ -88,8 +107,9 @@ export default function Home() {
 						))}
 					</IngredientsList> : null
 				}
-      {ingredients.length >= 4 ? <IngredientsButton callback={fetchAIRecipe} /> : null}
-      { message? <Recipe html={message} /> : null }
+      {ingredients.length >= 4 ? <IngredientsButton isLoading={isLoading} callback={fetchAIRecipe} /> : null}
+      
+      { message ? <Recipe ref={messageScrollRef} html={message} /> : null }
     </>
   );
 }
