@@ -26,7 +26,7 @@ export default function RootLayout({
       <body
         className={`${inter.variable} antialiased `}
       >
-        <div className="max-w-180 w-full  m-auto">
+        <div className="max-w-180 w-full min-h-dvh  m-auto dark:bg-neutral-950">
           {children}
         </div>
       </body>
