@@ -4,20 +4,18 @@ import IngredientsForm from "./components/Ingredients/IngredientsForm";
 import {useState, useRef, type FormEventHandler, useEffect} from 'react'
 import IngredientsList from "./components/Ingredients/IngredientsList";
 import IngredientItem from "./components/Ingredients/IngredientItem";
-import IngredientsButton from "./components/Ingredients/IngredientsButton";
+import IngredientsButton from "./components/Ingredients/IngredientsCall";
 import Recipe from "./components/Recipe";
 
 
 export default function Home() {
-  // state for ingredients["blue cheese", "oregano", "bread crumbs", "chicken breast"]
-  const [ingredients, setIngredients] = useState<string[]>([]);
   // state for ingredients
+  const [ingredients, setIngredients] = useState<string[]>(["blue cheese", "oregano", "bread crumbs", "chicken breast"]);
   // state for error management
   const [error, setError] = useState("")
   // ref to refocus input element
   const formRef = useRef<HTMLFormElement | null>(null);
-  // ref to manage dialog
-  // const toastRef = useRef<HTMLDialogElement | null>(null);
+  // ref to manage message
   const [message, setMessage] = useState<string | TrustedHTML | null>(null)
   // state for loading
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -30,10 +28,10 @@ export default function Home() {
     }
   }, [message]);
 
-  // const handleIngredientDelete = (index: number) => {
-  //   setError("")
-  //   setIngredients(ingredients.filter((_, i) => i!== index));
-  // }
+  const handleIngredientDelete = (ingredient: string) => {
+    setError("")
+    setIngredients(prevIngredients => prevIngredients.filter((ingred) => ingred!== ingredient));
+  }
   
 
   const handleSubmit: FormEventHandler = (e) => {
@@ -104,7 +102,7 @@ export default function Home() {
       { ingredients.length > 0 ?
 					<IngredientsList>
 						{ingredients.map((ingredient) => (
-							<IngredientItem key={ingredient}>{ingredient}</IngredientItem>
+							<IngredientItem  callback={handleIngredientDelete} key={ingredient}>{ingredient}</IngredientItem>
 						))}
 					</IngredientsList> : null
 				}

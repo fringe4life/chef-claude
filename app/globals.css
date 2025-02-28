@@ -49,11 +49,13 @@
 .markdown h1 {
 	font-size: 1.75rem;
 	margin-bottom: 1rem;
+	color: #502749;
 }
 
 .markdown h2 {
 	font-size: 1.5rem;
 	margin-bottom: .75rem;
+	color: #502732;
 }
 
 .markdown ul {
@@ -67,5 +69,6 @@
 .markdown ul li,
 .markdown ol li,
 .markdown p {
+	color: #a14308;
 	margin-bottom: .5rem;
 }
