@@ -6,6 +6,7 @@ import IngredientsList from "./components/Ingredients/IngredientsList";
 import IngredientItem from "./components/Ingredients/IngredientItem";
 import IngredientsButton from "./components/Ingredients/IngredientsCall";
 import Recipe from "./components/Recipe";
+import Footer from "./components/Footer";
 
 
 export default function Home() {
@@ -109,6 +110,8 @@ export default function Home() {
       {ingredients.length >= 4 ? <IngredientsButton isLoading={isLoading} callback={fetchAIRecipe} /> : null}
       
       { message ? <Recipe ref={messageScrollRef} html={message} /> : null }
+
+      <Footer />
     </>
   );
 }

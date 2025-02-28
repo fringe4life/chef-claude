@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+body {
+	font-family: var(--inter);
+}
+
 @theme {
 	--breakpoint-xs: 30rem;
 
