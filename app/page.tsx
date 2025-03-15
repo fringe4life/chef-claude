@@ -7,11 +7,9 @@ import IngredientItem from "./components/Ingredients/IngredientItem";
 import IngredientsButton from "./components/Ingredients/IngredientsCall";
 import Recipe from "./components/Recipe";
 import Footer from "./components/Footer";
-import { useSearchParams } from "next/navigation";
 
 
 export default function Home() {
-  const [searchParams, setSearchParams] = useSearchParams()
   // state for ingredients "blue cheese", "oregano", "bread crumbs", "chicken breast"
   const [ingredients, setIngredients] = useState<string[]>([]);
   // state for error management
