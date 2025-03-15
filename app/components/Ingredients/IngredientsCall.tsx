@@ -12,8 +12,8 @@ export default function IngredientsButton({callback, isLoading}: IngredientsButt
                 <h3 className="text-lg/6 font-medium text-neutral-900">Ready for a recipe?</h3>
                 <p className="text-gray-500 text-sm mt-2">Generate a recipe from your list of ingredients.</p>
             </hgroup>
-            <Button disabled={isLoading} type="button" onClick={callback} className='hover:bg-green-600 text-neutral-50 py-2 px-2 xs:justify-self-end flex-1 xs:basis-[14ch] xs:self-center w-full  bg-orange-600 disabled:bg-fuchsia-700 disabled:cursor-progress'>
-                {isLoading ? <div className="flex w-full"><p className="animate-side ">👩‍🍳</p><p className=" after:content-end after:inline-block after:absolute   after:text-white after:animate-dots">Processing</p></div> : "Get a recipe"}</Button>
+            <Button disabled={isLoading} type="button" onClick={callback} className='hover:bg-green-600 text-neutral-50 py-2 px-2 xs:justify-self-end flex-1 xs:basis-[14ch] xs:self-center w-full  bg-orange-600 disabled:bg-orange-700 disabled:cursor-progress'>
+                {isLoading ? <div className="flex w-full items-center"><p className="animate-side ">👩‍🍳</p><p className=" after:content-end after:inline-block after:absolute   after:text-white after:animate-dots">Processing</p></div> : "Get a recipe"}</Button>
         </section>
     )
 }

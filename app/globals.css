@@ -10,19 +10,19 @@ body {
 	--animate-side: side 1s linear infinite;
 	@keyframes side {
 		0% {
-			transform: rotate(-15deg);
+			transform: rotate(-7deg);
 		}
 		25% {
 			transform: rotate(0deg);
 		}
 		50% {
-			transform: rotate(15deg);
+			transform: rotate(7deg);
 		}
 		75% {
 			transform: rotate(0deg);
 		}
 		100% {
-			transform: rotate(-15deg);
+			transform: rotate(-7deg);
 		}
 	}
 	--animate-dots: loadingDots 1s linear infinite;
@@ -31,14 +31,11 @@ body {
 		0% {
 			content: ".";
 		}
-		33% {
+		50% {
 			content: "..";
 		}
-		66% {
-			content: "...";
-		}
 		100% {
-			content: ".";
+			content: "...";
 		}
 	}
 }
@@ -68,6 +65,16 @@ body {
 
 .markdown ol {
 	list-style-type: decimal;
+}
+
+.markdown ul,
+.markdown ol {
+	padding-left: 1.5rem;
+}
+
+.markdown ul li::marker,
+.markdown ol li::marker {
+	font-size: 1.25rem;
 }
 
 .markdown ul li,

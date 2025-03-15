@@ -22,7 +22,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html className="dark:bg-slate-700" lang="en">
       <body
         className={`${inter.variable} antialiased `}
       >

@@ -7,9 +7,11 @@ import IngredientItem from "./components/Ingredients/IngredientItem";
 import IngredientsButton from "./components/Ingredients/IngredientsCall";
 import Recipe from "./components/Recipe";
 import Footer from "./components/Footer";
+import { useSearchParams } from "next/navigation";
 
 
 export default function Home() {
+  const [searchParams, setSearchParams] = useSearchParams()
   // state for ingredients "blue cheese", "oregano", "bread crumbs", "chicken breast"
   const [ingredients, setIngredients] = useState<string[]>([]);
   // state for error management
@@ -34,31 +36,30 @@ export default function Home() {
     setIngredients(prevIngredients => prevIngredients.filter((ingred) => ingred!== ingredient));
   }
   
-
+  /**
+   * @abstract handles form submission and provides users with errors if needed
+   * @param the event genereted by submitting the form
+   * @returns void
+   */
   const handleSubmit: FormEventHandler = (e) => {
     e.preventDefault();
-    console.log("hello from submit")
+    
     const input = formRef.current?.ingredients.value.toLowerCase().trim();
-    console.log(input)
-    if (!input || input.trim().length === 0) {
+    
+    if (!input || input.length === 0) {
       setError("Please enter an ingredient");
     }
     else if (typeof input !== 'string'){
       setError("Please enter a valid ingredient");
     }
     else if (ingredients.includes(input)){
-      // handle duplicate
       setError("This ingredient already exists");
     } 
     else {
       setError("")
-			setIngredients([...ingredients, input.trim()]);
+			setIngredients([...ingredients, input]);
+      
 		}
-
-    if(ingredients.length < 4 ){
-      // add information to let user know need at least four ingredients
-      // before the chef will try to attempt a recipe
-    }
 
     formRef.current?.reset();
 		formRef.current?.ingredients.focus();
@@ -70,8 +71,8 @@ export default function Home() {
 				setError("You need at least four ingredients");
 			else {
 				setError("");
+        setIsLoading(true)
 				try {
-          setIsLoading(true)
 					const response = await fetch("/api", {
 						method: "POST",
 						headers: { "Content-Type": "application/json" },
@@ -81,7 +82,6 @@ export default function Home() {
 						throw new Error(`HTTP error! status: ${response.status}`);
 					}
 					const data = await response.json();
-					console.log(data);
           setMessage(data)
 				} catch (err) {
           if(err instanceof Error){
